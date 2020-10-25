@@ -1,8 +1,21 @@
-# NxNgNestUniversal
+# Nx Mono-repo with Angular Universal SSR via NestJS
+
+Starter project: Nx Workspace, Angular 10, and Universal SSR via NestJS
+
+<p float="left">
+  <img src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png" height="90">
+  <img src="https://angular.io/assets/images/logos/angular/angular.svg" height="145">
+  <img src="https://angular.io/generated/images/marketing/concept-icons/universal.png" height="120">
+  <img src="https://nestjs.com/img/logo-small.svg" width="120">
+</p>
+
+## <br/>
+
+---
+
+## <br/>
 
 This project was generated using [Nx](https://nx.dev).
-
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
 🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
 

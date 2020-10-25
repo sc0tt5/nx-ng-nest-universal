@@ -15,7 +15,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/demo-one",
+            "outputPath": "dist/demo-one/browser",
             "index": "apps/demo-one/src/index.html",
             "main": "apps/demo-one/src/main.ts",
             "polyfills": "apps/demo-one/src/polyfills.ts",
@@ -62,7 +62,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "demo-one:build"
+            "browserTarget": "demo-one:build",
+            "proxyConfig": "apps/demo-one/proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -82,7 +83,8 @@
             "tsConfig": [
               "apps/demo-one/tsconfig.app.json",
               "apps/demo-one/tsconfig.spec.json",
-              "apps/demo-one/tsconfig.editor.json"
+              "apps/demo-one/tsconfig.editor.json",
+              "apps/demo-one/tsconfig.server.json"
             ],
             "exclude": ["**/node_modules/**", "!apps/demo-one/**/*"]
           }
@@ -92,6 +94,58 @@
           "options": {
             "jestConfig": "apps/demo-one/jest.config.js",
             "passWithNoTests": true
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/demo-one/server",
+            "main": "apps/demo-one/server.ts",
+            "tsConfig": "apps/demo-one/tsconfig.server.json",
+            "externalDependencies": [
+              "@nestjs/microservices",
+              "@nestjs/microservices/microservices-module",
+              "@nestjs/websockets",
+              "@nestjs/websockets/socket-module",
+              "cache-manager"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "apps/demo-one/src/environments/environment.ts",
+                  "with": "apps/demo-one/src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": false
+            }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "demo-one:build",
+            "serverTarget": "demo-one:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "demo-one:build:production",
+              "serverTarget": "demo-one:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "demo-one:build:production",
+            "serverTarget": "demo-one:server:production",
+            "routes": ["/"]
+          },
+          "configurations": {
+            "production": {}
           }
         }
       }
@@ -119,6 +173,60 @@
           "options": {
             "tsConfig": ["apps/demo-one-e2e/tsconfig.e2e.json"],
             "exclude": ["**/node_modules/**", "!apps/demo-one-e2e/**/*"]
+          }
+        }
+      }
+    },
+    "api": {
+      "root": "apps/api",
+      "sourceRoot": "apps/api/src",
+      "projectType": "application",
+      "prefix": "api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/api",
+            "main": "apps/api/src/main.ts",
+            "tsConfig": "apps/api/tsconfig.app.json",
+            "assets": ["apps/api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "api:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/api/tsconfig.app.json",
+              "apps/api/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/api/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/api/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
