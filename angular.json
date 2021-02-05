@@ -15,10 +15,13 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "optimization": true,
+            "optimization": {
+              "styles": {
+                "inlineCritical": true
+              }
+            },
             "outputHashing": "all",
             "sourceMap": false,
-            "extractCss": true,
             "namedChunks": false,
             "extractLicenses": true,
             "vendorChunk": false,
