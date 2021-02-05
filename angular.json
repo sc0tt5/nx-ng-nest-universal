@@ -15,6 +15,17 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "optimization": {
+              "styles": {
+                "inlineCritical": true
+              }
+            },
+            "outputHashing": "all",
+            "sourceMap": false,
+            "namedChunks": false,
+            "extractLicenses": true,
+            "vendorChunk": false,
+            "buildOptimizer": true,
             "outputPath": "dist/demo-one/browser",
             "index": "apps/demo-one/src/index.html",
             "main": "apps/demo-one/src/main.ts",
@@ -36,14 +47,6 @@
                   "with": "apps/demo-one/src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -57,7 +60,8 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -94,11 +98,15 @@
           "options": {
             "jestConfig": "apps/demo-one/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/apps/demo-one"]
         },
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
+            "sourceMap": false,
+            "optimization": false,
+            "outputHashing": "media",
             "outputPath": "dist/demo-one/server",
             "main": "apps/demo-one/server.ts",
             "tsConfig": "apps/demo-one/tsconfig.server.json",
@@ -112,15 +120,12 @@
           },
           "configurations": {
             "production": {
-              "outputHashing": "media",
               "fileReplacements": [
                 {
                   "replace": "apps/demo-one/src/environments/environment.ts",
                   "with": "apps/demo-one/src/environments/environment.prod.ts"
                 }
-              ],
-              "sourceMap": false,
-              "optimization": false
+              ]
             }
           }
         },
@@ -204,7 +209,8 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@nrwl/node:execute",
@@ -227,7 +233,8 @@
           "options": {
             "jestConfig": "apps/api/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/apps/api"]
         }
       }
     }

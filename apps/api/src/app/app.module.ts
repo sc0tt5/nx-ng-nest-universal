@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { AngularUniversalModule } from '@nestjs/ng-universal';
 import { join } from 'path';
-// import { AppServerModule } from '../src/main.server';
+
+// tslint:disable-next-line: nx-enforce-module-boundaries // todo: how not to import this from app
 import { AppServerModule } from '../../../demo-one/src/main.server';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
