@@ -6,15 +6,22 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
+import { SocketAdapter } from './app/chat/socket.adapter';
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
+  const app = await NestFactory.create(AppModule, { cors: true });
+  // const globalPrefix = 'api';
+
+  // app.setGlobalPrefix(globalPrefix);
+  app.useWebSocketAdapter(new SocketAdapter(app));
+  // app.enableCors({ credentials: false, origin: '*' });
+
   const port = process.env.PORT || 3333;
+
   await app.listen(port, () => {
-    Logger.log('Listening at http://localhost:' + port + '/' + globalPrefix);
+    // Logger.log('Listening at http://localhost:' + port + '/' + globalPrefix);
+    Logger.log('Listening at http://localhost:' + port);
   });
 }
 
