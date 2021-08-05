@@ -1,15 +1,19 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
+import { Observable } from 'rxjs';
+import { io, Socket } from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private socket: Socket
-  ) {}
+  private socket: Socket;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.connect();
+    }
+  }
 
   sendChat(message) {
     console.log('sendChat from Angular', message);
@@ -18,7 +22,27 @@ export class ChatService {
 
   receiveChat() {
     if (isPlatformBrowser(this.platformId)) {
-      return this.socket.fromEvent('chat');
+      return new Observable((observer) => {
+        this.socket.on('chat', (message) => {
+          observer.next(message);
+        });
+      });
     }
+  }
+
+  private connect(): void {
+    this.socket = io('http://localhost:3333');
+
+    this.socket.on('connect', () => {
+      console.log('WebSocket online...');
+    });
+
+    this.socket.on('disconnect', (reason) => {
+      console.log('WebSocket disconnected...', reason);
+    });
+  }
+
+  private disconnect(): void {
+    this.socket.disconnect();
   }
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
 
 import { ChatService } from './chat.service';
 
@@ -10,7 +9,6 @@ import { ChatService } from './chat.service';
 })
 export class AppComponent implements OnInit {
   public title = 'demo-one';
-  public users = 0;
   public message = '';
   public messages: string[] = [];
 
@@ -18,7 +16,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.chatService.receiveChat().subscribe((message: string) => {
-      console.log('receiveChat in Angular:::', message);
       this.messages.push(message);
     });
   }
