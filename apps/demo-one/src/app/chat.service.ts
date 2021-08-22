@@ -31,7 +31,9 @@ export class ChatService {
   }
 
   private connect(): void {
-    this.socket = io('http://localhost:3333');
+    const namespace = 'chat';
+    const path = '/ws';
+    this.socket = io(`http://localhost:3001/${namespace}`, { path });
 
     this.socket.on('connect', () => {
       console.log('WebSocket online...');

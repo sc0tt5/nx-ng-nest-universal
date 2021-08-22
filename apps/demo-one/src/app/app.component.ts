@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 
 import { ChatService } from './chat.service';
 
@@ -12,12 +13,17 @@ export class AppComponent implements OnInit {
   public message = '';
   public messages: string[] = [];
 
-  constructor(private chatService: ChatService) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private chatService: ChatService
+  ) {}
 
   ngOnInit() {
-    this.chatService.receiveChat().subscribe((message: string) => {
-      this.messages.push(message);
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      this.chatService.receiveChat().subscribe((message: string) => {
+        this.messages.push(message);
+      });
+    }
   }
 
   addChat() {

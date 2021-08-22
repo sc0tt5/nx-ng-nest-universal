@@ -1,28 +1,21 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
-import { SocketAdapter } from './app/chat/socket.adapter';
 import { AppModule } from './app/app.module';
 
+const logger = new Logger('NestApplication');
+
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
-  // const globalPrefix = 'api';
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const globalPrefix = 'api';
+  const port = process.env.PORT || 3000;
 
-  // app.setGlobalPrefix(globalPrefix);
-  app.useWebSocketAdapter(new SocketAdapter(app));
-  // app.enableCors({ credentials: false, origin: '*' });
+  app.setGlobalPrefix(globalPrefix);
 
-  const port = process.env.PORT || 3333;
+  await app.listen(port);
 
-  await app.listen(port, () => {
-    // Logger.log('Listening at http://localhost:' + port + '/' + globalPrefix);
-    Logger.log('Listening at http://localhost:' + port);
-  });
+  logger.log(`SSR server listening at ${await app.getUrl()}`);
 }
 
 // Webpack will replace 'require' with '__webpack_require__'
