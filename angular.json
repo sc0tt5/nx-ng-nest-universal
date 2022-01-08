@@ -74,17 +74,11 @@
               }
             },
             "outputHashing": "all",
-            "sourceMap": false,
-            "namedChunks": false,
-            "extractLicenses": true,
-            "vendorChunk": false,
-            "buildOptimizer": true,
             "outputPath": "dist/demo-one/browser",
             "index": "apps/demo-one/src/index.html",
             "main": "apps/demo-one/src/main.ts",
             "polyfills": "apps/demo-one/src/polyfills.ts",
             "tsConfig": "apps/demo-one/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "apps/demo-one/src/favicon.ico",
               "apps/demo-one/src/assets"
@@ -151,7 +145,6 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "sourceMap": false,
             "optimization": {
               "scripts": false,
               "styles": true
@@ -165,7 +158,9 @@
               "@nestjs/microservices/microservices-module",
               "@nestjs/websockets",
               "@nestjs/websockets/socket-module",
-              "cache-manager"
+              "cache-manager",
+              "class-transformer",
+              "class-validator"
             ]
           },
           "configurations": {

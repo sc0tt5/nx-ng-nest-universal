@@ -27,10 +27,10 @@
     "help": "nx help",
     "dev:ssr": "ng run demo-one:serve-ssr",
     "serve:ssr": "node dist/demo-one/server/main.js",
-    "build:ssr": "ng build --prod && ng run demo-one:server:production",
+    "build:ssr": "ng build --configuration production && ng run demo-one:server:production",
     "prerender": "ng run demo-one:prerender",
     "prebuild:ssr": "ngcc",
-    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points"
+    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main"
   },
   "private": true,
   "dependencies": {
