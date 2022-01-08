@@ -14,7 +14,9 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": [
+              "apps/api/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -29,22 +31,14 @@
               ]
             }
           },
-          "outputs": ["{options.outputPath}"]
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
             "buildTarget": "api:build"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/api/tsconfig.app.json",
-              "apps/api/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!apps/api/**/*"]
           }
         },
         "test": {
@@ -53,7 +47,9 @@
             "jestConfig": "apps/api/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/apps/api"]
+          "outputs": [
+            "coverage/apps/api"
+          ]
         }
       },
       "tags": []
@@ -93,7 +89,9 @@
               "apps/demo-one/src/favicon.ico",
               "apps/demo-one/src/assets"
             ],
-            "styles": ["apps/demo-one/src/styles.scss"],
+            "styles": [
+              "apps/demo-one/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -118,7 +116,9 @@
               ]
             }
           },
-          "outputs": ["{options.outputPath}"]
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -138,25 +138,15 @@
             "browserTarget": "demo-one:build"
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/demo-one/tsconfig.app.json",
-              "apps/demo-one/tsconfig.spec.json",
-              "apps/demo-one/tsconfig.editor.json",
-              "apps/demo-one/tsconfig.server.json"
-            ],
-            "exclude": ["**/node_modules/**", "!apps/demo-one/**/*"]
-          }
-        },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/demo-one/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/apps/demo-one"]
+          "outputs": [
+            "coverage/apps/demo-one"
+          ]
         },
         "server": {
           "builder": "@angular-devkit/build-angular:server",
@@ -207,7 +197,9 @@
           "options": {
             "browserTarget": "demo-one:build:production",
             "serverTarget": "demo-one:server:production",
-            "routes": ["/"]
+            "routes": [
+              "/"
+            ]
           },
           "configurations": {
             "production": {}
@@ -233,60 +225,12 @@
               "devServerTarget": "demo-one:serve:production"
             }
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": ["apps/demo-one-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/demo-one-e2e/**/*"]
-          }
         }
       },
       "tags": [],
-      "implicitDependencies": ["demo-one"]
-    }
-  },
-  "schematics": {
-    "@nrwl/workspace": {
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/cypress": {
-      "cypress-project": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/node": {
-      "application": {
-        "linter": "tslint"
-      },
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/nest": {
-      "application": {
-        "linter": "tslint"
-      },
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/express": {
-      "application": {
-        "linter": "tslint"
-      },
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
+      "implicitDependencies": [
+        "demo-one"
+      ]
     }
   }
 }
