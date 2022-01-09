@@ -1,0 +1,29 @@
+{
+  "root": "apps/demo-one-e2e",
+  "sourceRoot": "apps/demo-one-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/demo-one-e2e/cypress.json",
+        "tsConfig": "apps/demo-one-e2e/tsconfig.e2e.json",
+        "devServerTarget": "demo-one:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "demo-one:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/demo-one-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["demo-one"]
+}
