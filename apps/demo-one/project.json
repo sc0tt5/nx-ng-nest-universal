@@ -1,0 +1,146 @@
+{
+  "projectType": "application",
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
+  "root": "apps/demo-one",
+  "sourceRoot": "apps/demo-one/src",
+  "prefix": "nx-ng-nest-universal",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "optimization": {
+          "styles": {
+            "inlineCritical": true
+          }
+        },
+        "outputHashing": "all",
+        "outputPath": "dist/demo-one/browser",
+        "index": "apps/demo-one/src/index.html",
+        "main": "apps/demo-one/src/main.ts",
+        "polyfills": "apps/demo-one/src/polyfills.ts",
+        "tsConfig": "apps/demo-one/tsconfig.app.json",
+        "assets": ["apps/demo-one/src/favicon.ico", "apps/demo-one/src/assets"],
+        "styles": ["apps/demo-one/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/demo-one/src/environments/environment.ts",
+              "with": "apps/demo-one/src/environments/environment.prod.ts"
+            }
+          ],
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "10kb"
+            }
+          ]
+        }
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "browserTarget": "demo-one:build",
+        "proxyConfig": "apps/demo-one/proxy.conf.json"
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "demo-one:build:production"
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "demo-one:build"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "apps/demo-one/jest.config.js",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/apps/demo-one"]
+    },
+    "server": {
+      "executor": "@angular-devkit/build-angular:server",
+      "options": {
+        "optimization": {
+          "scripts": false,
+          "styles": true
+        },
+        "outputHashing": "media",
+        "outputPath": "dist/demo-one/server",
+        "main": "apps/demo-one/server.ts",
+        "tsConfig": "apps/demo-one/tsconfig.server.json",
+        "externalDependencies": [
+          "@nestjs/microservices",
+          "@nestjs/microservices/microservices-module",
+          "@nestjs/websockets/socket-module",
+          "cache-manager",
+          "class-transformer",
+          "class-validator"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/demo-one/src/environments/environment.ts",
+              "with": "apps/demo-one/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve-ssr": {
+      "executor": "@nguniversal/builders:ssr-dev-server",
+      "options": {
+        "browserTarget": "demo-one:build",
+        "serverTarget": "demo-one:server"
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "demo-one:build:production",
+          "serverTarget": "demo-one:server:production"
+        }
+      }
+    },
+    "prerender": {
+      "executor": "@nguniversal/builders:prerender",
+      "options": {
+        "browserTarget": "demo-one:build:production",
+        "serverTarget": "demo-one:server:production",
+        "routes": ["/"]
+      },
+      "configurations": {
+        "production": {}
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/demo-one/src/**/*.ts",
+          "apps/demo-one/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

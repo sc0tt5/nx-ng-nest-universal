@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "projects": {
+    "api": "apps/api",
+    "demo-one": "apps/demo-one",
+    "demo-one-e2e": "apps/demo-one-e2e"
+  }
+}
